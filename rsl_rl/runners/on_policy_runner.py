@@ -125,10 +125,10 @@ class OnPolicyRunner:
                 stop = time.time()
                 collection_time = stop - start
 
-                # Learning step
                 start = stop
                 self.alg.compute_returns(critic_obs)
             
+            # Learning step
             mean_value_loss, mean_surrogate_loss = self.alg.update()
             stop = time.time()
             learn_time = stop - start

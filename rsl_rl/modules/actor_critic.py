@@ -118,7 +118,13 @@ class ActorCritic(nn.Module):
 
     def update_distribution(self, observations):
         mean = self.actor(observations)
-        self.distribution = Normal(mean, mean*0. + self.std)
+        mean = torch.nan_to_num(mean)
+        try:
+            self.distribution = Normal(mean, mean*0. + self.std)
+        except Exception as e:
+            import pdb
+            pdb.set_trace()
+
 
     def act(self, observations, **kwargs):
         self.update_distribution(observations)
